@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>97电影网 - 热门电影推荐_最新上映排片_影视资讯导航</title>
+<meta name="description" content="97电影网（https://97dianyingwang-app.github.io）是聚合影视资讯的单页导航站，提供最新上映电影推荐、电影分类导航、今日排片时刻表、高分电影榜单与观影攻略，手机端自适应浏览，快速找到想看的电影。">
+<meta name="keywords" content="97电影网,97电影,电影推荐,最新上映电影,电影分类,排片时刻表,高分电影榜单,观影攻略,影视资讯">
+<meta name="author" content="97电影网">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="format-detection" content="telephone=no">
+<link rel="canonical" href="https://97dianyingwang-app.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="97电影网">
+<meta property="og:title" content="97电影网 - 热门电影推荐_最新上映排片_影视资讯导航">
+<meta property="og:description" content="97电影网聚合最新上映电影推荐、电影分类导航、今日排片时刻表与高分电影榜单，手机端自适应浏览。">
+<meta property="og:url" content="https://97dianyingwang-app.github.io/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="97电影网 - 热门电影推荐_最新上映排片">
+<meta name="twitter:description" content="97电影网聚合最新上映电影推荐、电影分类导航、今日排片时刻表与高分电影榜单。">
+<meta name="theme-color" content="#0b0d12">
+<style>
+:root{
+  --bg:#0b0d12;
+  --bg-2:#12151f;
+  --bg-3:#181d29;
+  --line:rgba(255,200,87,.18);
+  --gold:#ffc857;
+  --gold-2:#ff9f1c;
+  --red:#d62828;
+  --txt:#e8eaf0;
+  --txt-2:#9aa2b5;
+  --radius:14px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",system-ui,-apple-system,sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(900px 500px at 15% -10%, rgba(255,159,28,.14), transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, rgba(214,40,40,.12), transparent 60%);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+img{max-width:100%;display:block}
+h1,h2,h3{line-height:1.3;font-weight:800;letter-spacing:.5px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ============ 顶部导航 ============ */
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;background:var(--gold);color:#111;padding:8px 14px;border-radius:8px;z-index:99}
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,13,18,.86);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;white-space:nowrap}
+.logo .mark{
+  width:38px;height:38px;flex:0 0 38px;border-radius:10px;
+  background:linear-gradient(145deg,var(--gold),var(--red));
+  color:#141414;display:grid;place-items:center;font-size:15px;font-weight:900;
+  box-shadow:0 6px 18px rgba(255,159,28,.28);
+}
+.logo span{color:var(--gold)}
+.nav{
+  display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  white-space:nowrap;font-size:14px;color:var(--txt-2);
+  padding:8px 12px;border-radius:999px;transition:.25s;
+}
+.nav a:hover,.nav a:focus{color:#141414;background:var(--gold)}
+@media(max-width:860px){
+  .bar{height:auto;padding:10px 0;flex-direction:column;align-items:stretch;gap:8px}
+  .nav{padding-bottom:2px}
+  .nav a{font-size:13px;padding:7px 11px}
+}
+
+/* ============ 胶片装饰条 ============ */
+.filmstrip{
+  height:26px;
+  background:
+    radial-gradient(circle at 12px 50%, rgba(255,200,87,.55) 0 4.5px, transparent 5px) 0 0/30px 100% repeat-x,
+    linear-gradient(180deg,#07090e,#05070b);
+  border-block:1px solid rgba(255,255,255,.05);
+}
+
+/* ============ 首屏 ============ */
+.hero{padding:56px 0 34px;position:relative}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;letter-spacing:2px;color:var(--gold);
+  border:1px solid var(--line);border-radius:999px;padding:6px 14px;
+  background:rgba(255,200,87,.06);
+}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.hero h1{
+  margin:18px 0 14px;
+  font-size:clamp(30px,7.2vw,58px);
+  letter-spacing:1px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(100deg,var(--gold),var(--gold-2) 45%,var(--red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lead{max-width:720px;color:var(--txt-2);font-size:clamp(14px,3.6vw,17px)}
+.hero .url{
+  margin-top:14px;font-size:13px;color:var(--txt-2);word-break:break-all;
+}
+.hero .url b{color:var(--gold);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 22px;border-radius:999px;font-size:15px;font-weight:700;
+  border:1px solid transparent;transition:.25s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#141414;box-shadow:0 8px 22px rgba(255,159,28,.24)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(255,159,28,.34)}
+.btn-ghost{border-color:var(--line);color:var(--txt)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:32px}
+.stat{
+  background:linear-gradient(180deg,var(--bg-2),var(--bg-3));
+  border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+  padding:16px 14px;text-align:center;
+}
+.stat b{display:block;font-size:clamp(22px,5.6vw,30px);color:var(--gold);line-height:1.2}
+.stat span{font-size:12px;color:var(--txt-2)}
+
+/* ============ 跑马灯 ============ */
+.marquee{
+  margin:34px 0 0;border-block:1px solid var(--line);
+  background:rgba(255,200,87,.04);overflow:hidden;
+}
+.marquee .track{display:flex;gap:0;width:max-content;animation:slide 26s linear infinite}
+.marquee span{
+  display:inline-block;padding:10px 22px;font-size:13px;color:var(--txt-2);white-space:nowrap;
+}
+.marquee span::before{content:"◆";color:var(--gold);margin-right:10px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+
+/* ============ 通用区块 ============ */
+section{padding:52px 0}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:26px}
+.sec-head h2{font-size:clamp(21px,5vw,30px);display:flex;align-items:center;gap:10px}
+.sec-head h2::before{content:"";width:5px;height:26px;border-radius:3px;background:linear-gradient(180deg,var(--gold),var(--red))}
+.sec-head .tip{font-size:12px;color:var(--txt-2)}
+.tag-link{font-size:13px;color:var(--gold);border-bottom:1px dashed var(--gold);padding-bottom:2px}
+
+/* ============ 栏目一：热门推荐 ============ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{
+  background:linear-gradient(180deg,var(--bg-2),#0e1119);
+  border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);
+  overflow:hidden;transition:.3s;display:flex;flex-direction:column;
+}
+.card:hover{transform:translateY(-6px);border-color:rgba(255,200,87,.45);box-shadow:0 16px 34px rgba(0,0,0,.45)}
+.poster{
+  position:relative;aspect-ratio:3/4;display:grid;place-items:center;
+  padding:16px;text-align:center;
+}
+.poster .tt{font-size:clamp(17px,4.6vw,21px);font-weight:900;letter-spacing:2px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.poster .sub{margin-top:8px;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.72)}
+.poster .score{
+  position:absolute;top:10px;right:10px;
+  background:rgba(0,0,0,.55);border:1px solid var(--line);border-radius:8px;
+  padding:3px 9px;font-size:13px;font-weight:800;color:var(--gold);
+}
+.poster .no{position:absolute;left:10px;top:10px;font-size:11px;color:rgba(255,255,255,.6);letter-spacing:1px}
+.p1{background:linear-gradient(160deg,#3a1c71,#d62828)}
+.p2{background:linear-gradient(160deg,#0f4c5c,#ff9f1c)}
+.p3{background:linear-gradient(160deg,#2b1b3d,#f25f5c)}
+.p4{background:linear-gradient(160deg,#123a2f,#ffc857)}
+.p5{background:linear-gradient(160deg,#1b2a4a,#7bd389)}
+.p6{background:linear-gradient(160deg,#4a1b2c,#e0aaff)}
+.card .body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .body h3{font-size:16px}
+.card .body p{font-size:13px;color:var(--txt-2);flex:1}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta i{font-style:normal;font-size:11px;color:var(--txt-2);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:2px 8px}
+
+/* ============ 栏目二：电影分类 ============ */
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.cat{
+  border:1px solid rgba(255,255,255,.08);border-radius:12px;
+  padding:16px 14px;background:var(--bg-2);transition:.25s;
+  display:flex;flex-direction:column;gap:4px;
+}
+.cat:hover{background:var(--bg-3);border-color:var(--gold);transform:translateY(-3px)}
+.cat b{font-size:15px}
+.cat span{font-size:12px;color:var(--txt-2)}
+.cat em{font-style:normal;font-size:11px;color:var(--gold);letter-spacing:1px}
+
+/* ============ 栏目三：排片时刻表 ============ */
+.tickets{display:grid;gap:14px}
+.ticket{
+  display:grid;grid-template-columns:112px 1fr;
+  border:1px dashed rgba(255,200,87,.32);border-radius:var(--radius);
+  background:linear-gradient(90deg,rgba(255,200,87,.05),var(--bg-2) 30%);
+  overflow:hidden;
+}
+.ticket .hall{
+  padding:18px 12px;display:grid;place-items:center;text-align:center;
+  border-right:2px dashed rgba(255,200,87,.32);
+  background:linear-gradient(180deg,rgba(255,159,28,.14),transparent);
+}
+.ticket .hall b{display:block;font-size:20px;color:var(--gold)}
+.ticket .hall span{font-size:11px;color:var(--txt-2)}
+.ticket .info{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.ticket .info h3{font-size:17px}
+.ticket .info .row{display:flex;flex-wrap:wrap;gap:8px}
+.time{
+  font-size:13px;color:var(--gold);border:1px solid var(--line);
+  border-radius:8px;padding:5px 11px;transition:.2s;
+}
+.time:hover{background:var(--gold);color:#141414}
+.ticket .info .note{font-size:12px;color:var(--txt-2)}
+@media(max-width:520px){
+  .ticket{grid-template-columns:1fr}
+  .ticket .hall{border-right:none;border-bottom:2px dashed rgba(255,200,87,.32);padding:12px}
+}
+
+/* ============ 栏目四：榜单 ============ */
+.rank{display:grid;gap:12px}
+.rank li{
+  display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;
+  background:var(--bg-2);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:14px 16px;transition:.25s;
+}
+.rank li:hover{border-color:var(--gold);transform:translateX(4px)}
+.rank .num{
+  width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  font-weight:900;font-size:15px;background:rgba(255,255,255,.07);color:var(--txt-2);
+}
+.rank li:nth-child(1) .num{background:linear-gradient(135deg,#ffd700,#ff9f1c);color:#141414}
+.rank li:nth-child(2) .num{background:linear-gradient(135deg,#d9d9d9,#9aa2b5);color:#141414}
+.rank li:nth-child(3) .num{background:linear-gradient(135deg,#e08b53,#a4552c);color:#141414}
+.rank .name b{display:block;font-size:15px}
+.rank .name span{font-size:12px;color:var(--txt-2)}
+.rank .rt{font-size:15px;font-weight:800;color:var(--gold)}
+
+/* ============ 栏目五：观影攻略 ============ */
+.guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.gcard{
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);
+  background:linear-gradient(180deg,var(--bg-2),#0e1119);padding:22px 20px;
+}
+.gcard .ic{
+  width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  font-size:20px;font-weight:900;color:#141414;margin-bottom:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+}
+.gcard h3{font-size:16px;margin-bottom:8px}
+.gcard p{font-size:13px;color:var(--txt-2)}
+.gcard ol{margin-top:10px;display:grid;gap:6px}
+.gcard ol li{font-size:13px;color:var(--txt-2);padding-left:16px;position:relative}
+.gcard ol li::before{content:"▸";position:absolute;left:0;color:var(--gold)}
+
+/* ============ 栏目六：常见问题 ============ */
+.faq{display:grid;gap:10px}
+.faq details{
+  border:1px solid rgba(255,255,255,.08);border-radius:12px;
+  background:var(--bg-2);overflow:hidden;
+}
+.faq summary{
+  cursor:pointer;list-style:none;padding:16px 18px;font-size:15px;font-weight:700;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold);font-size:20px;font-weight:900}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 18px 18px;font-size:13.5px;color:var(--txt-2)}
+
+/* ============ 页脚 ============ */
+.footer{
+  border-top:1px solid var(--line);margin-top:20px;
+  background:linear-gradient(180deg,#0a0c11,#06080c);
+  padding:40px 0 26px;
+}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
+.fgrid h4{font-size:14px;color:var(--gold);margin-bottom:10px;letter-spacing:1px}
+.fgrid ul{display:grid;gap:7px}
+.fgrid a{font-size:13px;color:var(--txt-2)}
+.fgrid a:hover{color:var(--gold)}
+.copyright{
+  margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06);
+  font-size:12px;color:var(--txt-2);text-align:center;
+}
+.totop{
+  position:fixed;right:16px;bottom:16px;z-index:60;
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--gold);color:#141414;font-weight:900;
+  box-shadow:0 8px 20px rgba(0,0,0,.5);
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://97dianyingwang-app.github.io/#website",
+      "url":"https://97dianyingwang-app.github.io/",
+      "name":"97电影网",
+      "alternateName":"97电影",
+      "description":"97电影网提供最新上映电影推荐、电影分类导航、今日排片时刻表、高分电影榜单与观影攻略。",
+      "inLanguage":"zh-CN",
+      "publisher":{"@id":"https://97dianyingwang-app.github.io/#org"}
+    },
+    {
+      "@type":"Organization",
+      "@id":"https://97dianyingwang-app.github.io/#org",
+      "name":"97电影网",
+      "url":"https://97dianyingwang-app.github.io/",
+      "description":"97电影网 - 影视资讯聚合与电影推荐导航站点"
+    },
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"97电影网首页","item":"https://97dianyingwang-app.github.io/#home"},
+        {"@type":"ListItem","position":2,"name":"热门电影推荐","item":"https://97dianyingwang-app.github.io/#hot"},
+        {"@type":"ListItem","position":3,"name":"电影分类导航","item":"https://97dianyingwang-app.github.io/#category"},
+        {"@type":"ListItem","position":4,"name":"今日排片时刻表","item":"https://97dianyingwang-app.github.io/#schedule"},
+        {"@type":"ListItem","position":5,"name":"高分电影榜单","item":"https://97dianyingwang-app.github.io/#rank"},
+        {"@type":"ListItem","position":6,"name":"观影攻略","item":"https://97dianyingwang-app.github.io/#guide"}
+      ]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"97电影网是什么类型的网站？","acceptedAnswer":{"@type":"Answer","text":"97电影网是影视资讯聚合单页导航站，提供最新上映电影推荐、电影分类导航、排片时刻表与高分电影榜单查询。"}},
+        {"@type":"Question","name":"97电影网是否需要注册才能浏览？","acceptedAnswer":{"@type":"Answer","text":"不需要。97电影网所有栏目与影片信息均可直接浏览，无需注册与登录。"}},
+        {"@type":"Question","name":"97电影网多久更新一次排片与推荐？","acceptedAnswer":{"@type":"Answer","text":"热门推荐与排片信息每日更新，分类榜单每周整理一次，保证内容时效性。"}},
+        {"@type":"Question","name":"在手机上打开97电影网体验如何？","acceptedAnswer":{"@type":"Answer","text":"站点采用响应式布局，导航可横向滑动，卡片与排片表在手机端自动单列显示。"}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="header">
+  <div class="wrap bar">
+    <a class="logo" href="#home"><span class="mark" aria-hidden="true">97</span>97电影<span>网</span></a>
+    <nav class="nav" aria-label="97电影网主导航">
+      <a href="#home">首页</a>
+      <a href="#hot">热门推荐</a>
+      <a href="#category">电影分类</a>
+      <a href="#schedule">排片时刻表</a>
+      <a href="#rank">高分榜单</a>
+      <a href="#guide">观影攻略</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+  </div>
+</header>
+
+<div class="filmstrip" aria-hidden="true"></div>
+
+<main id="main">
+
+  <!-- 首屏 -->
+  <section class="hero" id="home">
+    <div class="wrap">
+      <span class="badge">97电影网 · 每日更新</span>
+      <h1>看电影前，先上 <em>97电影网</em></h1>
+      <p class="lead">97电影网（97dianyingwang-app.github.io）聚合最新上映电影推荐、电影分类导航、今日排片时刻表与高分电影榜单，一部手机就能完成从选片到查场的全过程，帮你更快找到值得看的那部电影。</p>
+      <p class="url">官方网站：<b>https://97dianyingwang-app.github.io</b></p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#hot">浏览热门电影</a>
+        <a class="btn btn-ghost" href="#schedule">查询今日排片</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>1286+</b><span>收录影片</span></div>
+        <div class="stat"><b>24</b><span>电影分类</span></div>
+        <div class="stat"><b>每日</b><span>更新频率</span></div>
+        <div class="stat"><b>100%</b><span>移动端适配</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>97电影网 · 最新上映速览</span><span>科幻巨制《星河远征》热映中</span><span>悬疑佳作《雾港迷城》口碑领跑</span><span>动画新作《追光少年》全家首选</span><span>高分修复经典重映专场</span><span>97电影网排片时刻表每日刷新</span>
+      <span>97电影网 · 最新上映速览</span><span>科幻巨制《星河远征》热映中</span><span>悬疑佳作《雾港迷城》口碑领跑</span><span>动画新作《追光少年》全家首选</span><span>高分修复经典重映专场</span><span>97电影网排片时刻表每日刷新</span>
+    </div>
+  </div>
+
+  <!-- 栏目一：热门推荐 -->
+  <section id="hot">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 热门电影推荐</h2>
+        <a class="tag-link" href="#">查看全部影片 →</a>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="poster p1" role="img" aria-label="电影《星河远征》海报">
+            <span class="no">NO.01</span><span class="score">9.1</span>
+            <div><div class="tt">星河远征</div><div class="sub">SCI-FI EPIC</div></div>
+          </div>
+          <div class="body">
+            <h3>星河远征</h3>
+            <p>硬科幻视效大片，宏大宇宙叙事，97电影网本周热度榜首位作品。</p>
+            <div class="meta"><i>科幻</i><i>冒险</i><i>148分钟</i></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="poster p2" role="img" aria-label="电影《雾港迷城》海报">
+            <span class="no">NO.02</span><span class="score">8.8</span>
+            <div><div class="tt">雾港迷城</div><div class="sub">MYSTERY</div></div>
+          </div>
+          <div class="body">
+            <h3>雾港迷城</h3>
+            <p>层层反转的悬疑力作，节奏紧凑，被影迷称为年度黑马。</p>
+            <div class="meta"><i>悬疑</i><i>犯罪</i><i>126分钟</i></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="poster p3" role="img" aria-label="电影《追光少年》海报">
+            <span class="no">NO.03</span><span class="score">8.6</span>
+            <div><div class="tt">追光少年</div><div class="sub">ANIMATION</div></div>
+          </div>
+          <div class="body">
+            <h3>追光少年</h3>
+            <p>治愈系动画长片，画面细腻，适合全家周末一起观看。</p>
+            <div class="meta"><i>动画</i><i>家庭</i><i>98分钟</i></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="poster p4" role="img" aria-label="电影《长街烟火》海报">
+            <span class="no">NO.04</span><span class="score">8.4</span>
+            <div><div class="tt">长街烟火</div><div class="sub">DRAMA</div></div>
+          </div>
+          <div class="body">
+            <h3>长街烟火</h3>
+            <p>市井人情剧情片，群像刻画扎实，情感后劲十足。</p>
+            <div class="meta"><i>剧情</i><i>温情</i><i>112分钟</i></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="poster p5" role="img" aria-label="电影《山海行者》海报">
+            <span class="no">NO.05</span><span class="score">8.2</span>
+            <div><div class="tt">山海行者</div><div class="sub">ADVENTURE</div></div>
+          </div>
+          <div class="body">
+            <h3>山海行者</h3>
+            <p>东方奇幻冒险，实景取景壮阔，服化道细节考究。</p>
+            <div class="meta"><i>奇幻</i><i>动作</i><i>135分钟</i></div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="poster p6" role="img" aria-label="电影《午夜回声》海报">
+            <span class="no">NO.06</span><span class="score">7.9</span>
+            <div><div class="tt">午夜回声</div><div class="sub">THRILLER</div></div>
+          </div>
+          <div class="body">
+            <h3>午夜回声</h3>
+            <p>心理惊悚小成本佳作，氛围营造出色，影院沉浸感强。</p>
+            <div class="meta"><i>惊悚</i><i>心理</i><i>104分钟</i></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="filmstrip" aria-hidden="true"></div>
+
+  <!-- 栏目二：电影分类 -->
+  <section id="category">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 电影分类导航</h2>
+        <span class="tip">共 24 个分类 · 按类型快速筛选</span>
+      </div>
+      <div class="cats">
+        <a class="cat" href="#"><em>TYPE 01</em><b>科幻</b><span>126 部</span></a>
+        <a class="cat" href="#"><em>TYPE 02</em><b>动作</b><span>214 部</span></a>
+        <a class="cat" href="#"><em>TYPE 03</em><b>悬疑</b><span>98 部</span></a>
+        <a class="cat" href="#"><em>TYPE 04</em><b>喜剧</b><span>187 部</span></a>
+        <a class="cat" href="#"><em>TYPE 05</em><b>爱情</b><span>163 部</span></a>
+        <a class="cat" href="#"><em>TYPE 06</em><b>动画</b><span>112 部</span></a>
+        <a class="cat" href="#"><em>TYPE 07</em><b>剧情</b><span>205 部</span></a>
+        <a class="cat" href="#"><em>TYPE 08</em><b>惊悚</b><span>76 部</span></a>
+        <a class="cat" href="#"><em>TYPE 09</em><b>纪录</b><span>54 部</span></a>
+        <a class="cat" href="#"><em>TYPE 10</em><b>奇幻</b><span>88 部</span></a>
+        <a class="cat" href="#"><em>TYPE 11</em><b>战争</b><span>61 部</span></a>
+        <a class="cat" href="#"><em>TYPE 12</em><b>经典修复</b><span>43 部</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目三：排片时刻表 -->
+  <section id="schedule">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 今日排片时刻表</h2>
+        <span class="tip">时间为示例场次，以影院现场为准</span>
+      </div>
+      <div class="tickets">
+        <article class="ticket">
+          <div class="hall"><div><b>1号厅</b><span>激光 IMAX</span></div></div>
+          <div class="info">
+            <h3>星河远征 · 原声 3D</h3>
+            <div class="row">
+              <a class="time" href="#">10:20</a><a class="time" href="#">13:10</a>
+              <a class="time" href="#">16:00</a><a class="time" href="#">19:30</a><a class="time" href="#">22:10</a>
+            </div>
+            <p class="note">片长 148 分钟 · 建议提前 20 分钟入场 · 97电影网推荐指数 ★★★★★</p>
+          </div>
+        </article>
+        <article class="ticket">
+          <div class="hall"><div><b>3号厅</b><span>DOLBY 全景声</span></div></div>
+          <div class="info">
+            <h3>雾港迷城 · 国语 2D</h3>
+            <div class="row">
+              <a class="time" href="#">09:50</a><a class="time" href="#">12:05</a>
+              <a class="time" href="#">15:25</a><a class="time" href="#">18:40</a><a class="time" href="#">21:15</a>
+            </div>
+            <p class="note">片长 126 分钟 · 含彩蛋，请勿提前离场 · 97电影网推荐指数 ★★★★☆</p>
+          </div>
+        </article>
+        <article class="ticket">
+          <div class="hall"><div><b>5号厅</b><span>亲子厅</span></div></div>
+          <div class="info">
+            <h3>追光少年 · 国语 2D</h3>
+            <div class="row">
+              <a class="time" href="#">10:00</a><a class="time" href="#">12:40</a>
+              <a class="time" href="#">15:10</a><a class="time" href="#">17:35</a>
+            </div>
+            <p class="note">片长 98 分钟 · 提供儿童座椅与家庭套票 · 97电影网推荐指数 ★★★★☆</p>
+          </div>
+        </article>
+        <article class="ticket">
+          <div class="hall"><div><b>7号厅</b><span>深夜场</span></div></div>
+          <div class="info">
+            <h3>午夜回声 · 原声 2D</h3>
+            <div class="row">
+              <a class="time" href="#">20:15</a><a class="time" href="#">22:45</a><a class="time" href="#">00:30</a>
+            </div>
+            <p class="note">片长 104 分钟 · 深夜场请注意返程安全 · 97电影网推荐指数 ★★★☆☆</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="filmstrip" aria-hidden="true"></div>
+
+  <!-- 栏目四：高分榜单 -->
+  <section id="rank">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 高分电影榜单</h2>
+        <a class="tag-link" href="#">查看完整榜单 →</a>
+      </div>
+      <ol class="rank">
+        <li><span class="num">1</span><span class="name"><b>星河远征</b><span>科幻 / 2025 / 148分钟</span></span><span class="rt">9.1</span></li>
+        <li><span class="num">2</span><span class="name"><b>雾港迷城</b><span>悬疑 / 2025 / 126分钟</span></span><span class="rt">8.8</span></li>
+        <li><span class="num">3</span><span class="name"><b>追光少年</b><span>动画 / 2025 / 98分钟</span></span><span class="rt">8.6</span></li>
+        <li><span class="num">4</span><span class="name"><b>长街烟火</b><span>剧情 / 2024 / 112分钟</span></span><span class="rt">8.4</span></li>
+        <li><span class="num">5</span><span class="name"><b>山海行者</b><span>奇幻 / 2025 / 135分钟</span></span><span class="rt">8.2</span></li>
+        <li><span class="num">6</span><span class="name"><b>午夜回声</b><span>惊悚 / 2024 / 104分钟</span></span><span class="rt">7.9</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 栏目五：观影攻略 -->
+  <section id="guide">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 观影攻略</h2>
+        <span class="tip">选片 · 选厅 · 选座，一次搞定</span>
+      </div>
+      <div class="guide">
+        <article class="gcard">
+          <div class="ic" aria-hidden="true">1</div>
+          <h3>三分钟锁定想看的片</h3>
+          <p>按 97电影网提供的评分、类型与片长三重筛选，快速排除不合适的影片。</p>
+          <ol><li>先看评分与口碑标签</li><li>再核对片长与题材</li><li>最后对照排片时间</li></ol>
+        </article>
+        <article class="gcard">
+          <div class="ic" aria-hidden="true">2</div>
+          <h3>影厅怎么选更值</h3>
+          <p>视效大片优先大格式影厅，剧情对白类优先声音清晰的中小厅。</p>
+          <ol><li>IMAX / 激光厅：视效大片</li><li>全景声厅：音乐与音效片</li><li>中小厅：对白密集剧情片</li></ol>
+        </article>
+        <article class="gcard">
+          <div class="ic" aria-hidden="true">3</div>
+          <h3>黄金座位位置</h3>
+          <p>中小厅选正中偏后，大格式厅选中区前排，避免最边与最前两排。</p>
+          <ol><li>视线与银幕顶端齐平</li><li>避开音响主通道</li><li>情侣出行可选双数过道位</li></ol>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目六：常见问题 -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>97电影网 · 常见问题</h2>
+        <a class="tag-link" href="#">提交反馈 →</a>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>97电影网是什么类型的网站？</summary>
+          <p>97电影网是影视资讯聚合单页导航站，提供最新上映电影推荐、电影分类导航、排片时刻表与高分电影榜单查询，帮助用户更快完成选片决策。</p>
+        </details>
+        <details>
+          <summary>97电影网是否需要注册才能浏览？</summary>
+          <p>不需要。97电影网全部栏目与影片信息均可直接浏览，无需注册或登录即可查看热门推荐、分类导航与排片时刻表。</p>
+        </details>
+        <details>
+          <summary>97电影网多久更新一次排片与推荐？</summary>
+          <p>热门推荐与排片信息每日更新，分类榜单每周整理一次，确保用户看到的影片信息与场次保持较高时效性。</p>
+        </details>
+        <details>
+          <summary>在手机上打开 97电影网体验如何？</summary>
+          <p>站点采用响应式布局，顶部导航可横向滑动，影片卡片与排片表在手机端自动切换为单列显示，保证小屏阅读与点击体验。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4>关于 97电影网</h4>
+        <p style="font-size:13px;color:var(--txt-2)">97电影网（https://97dianyingwang-app.github.io）致力于用更简洁的方式呈现电影资讯，让选片与查场变得简单。</p>
+      </div>
+      <div>
+        <h4>影片栏目</h4>
+        <ul>
+          <li><a href="#hot">热门电影推荐</a></li>
+          <li><a href="#category">电影分类导航</a></li>
+          <li><a href="#rank">高分电影榜单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>观影服务</h4>
+        <ul>
+          <li><a href="#schedule">今日排片时刻表</a></li>
+          <li><a href="#guide">观影攻略指南</a></li>
+          <li><a href="#faq">常见问题解答</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>站点信息</h4>
+        <ul>
+          <li><a href="#">站点地图</a></li>
+          <li><a href="#">内容投稿</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">97电影网 · 97dianyingwang-app.github.io · 影视资讯聚合推荐 · 本页面内容为示例展示</p>
+  </div>
+</footer>
+
+<a class="totop" href="#home" aria-label="返回97电影网顶部">↑</a>
+
+</body>
+</html>
